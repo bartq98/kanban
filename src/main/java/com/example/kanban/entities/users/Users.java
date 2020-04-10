@@ -1,6 +1,9 @@
 package com.example.kanban.entities.users;
 
+import com.example.kanban.entities.membership.Membership;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -26,6 +29,9 @@ public class Users {
 
     @Column(name = "is_admin", nullable = false) // This will be bit(1) in database
     private boolean is_admin = false;
+
+    @OneToMany(targetEntity = Membership.class, mappedBy = "user")
+    private List<Membership> memberships;
 
     public Integer getId() {
         return id;

@@ -1,5 +1,8 @@
 package com.example.kanban.entities.membership;
 
+import com.example.kanban.entities.boards.Board;
+import com.example.kanban.entities.users.Users;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,15 +11,20 @@ public class Membership {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
-    @Column(unique = true, nullable = true)
-    private Integer user_id;
+    @Column(nullable = false)
+    private Integer userId;
     
     @Column(nullable = false, length = 30)
-    private Integer board_id;
+    private Integer boardId;
 
     @Enumerated(EnumType.STRING)
     private MemberType member_type;
 
+    @ManyToOne(targetEntity = Users.class)
+    private Users user;
+
+    @OneToMany(targetEntity = Board.class, mappedBy = "jeszcze nie wiem")
+    private Board board;
 
     public Integer getId() {
         return id;
@@ -26,20 +34,20 @@ public class Membership {
         this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getuserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setuserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getBoard_id() {
-        return board_id;
+    public Integer getboardId() {
+        return boardId;
     }
 
-    public void setBoard_id(Integer board_id) {
-        this.board_id = board_id;
+    public void setboardId(Integer boardId) {
+        this.boardId = boardId;
     }
 
     public MemberType getMember_type() {
