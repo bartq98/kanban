@@ -1,5 +1,6 @@
 package com.example.kanban;
 
+import com.example.kanban.entities.membership.Membership;
 import com.example.kanban.entities.task.Task;
 import com.example.kanban.entities.task.TaskRepository;
 import com.example.kanban.entities.users.Users;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping(path="/demo")
@@ -61,6 +63,11 @@ public class MainController {
     @GetMapping(path="/all_users")
     public @ResponseBody Iterable<Users> getAllUsers() {
         // This returns a JSON or XML with the users
+        List<Membership> membershipList = usersRepository.getAllMemberships(2);
+        System.out.println("HEJ");
+        for (Membership m : membershipList) {
+            System.out.println(m.getId());
+        }
         return usersRepository.findAll();
     }
 
