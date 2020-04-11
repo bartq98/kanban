@@ -14,7 +14,7 @@ public class Membership {
     @Enumerated(EnumType.STRING)
     private MemberType member_type;
 
-    @ManyToOne
+    @ManyToOne //;)
     private Users user;
 
     @ManyToOne
