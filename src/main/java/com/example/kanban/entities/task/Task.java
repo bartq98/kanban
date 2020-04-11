@@ -1,5 +1,8 @@
 package com.example.kanban.entities.task;
 
+import com.example.kanban.entities.sections.Section;
+import com.example.kanban.entities.users.Users;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,8 +13,11 @@ public class Task {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false)
-    private Integer column_id;
+    @ManyToOne
+    private Section section;
+
+    @ManyToOne
+    private Users user;
 
     @Column(nullable = false)
     private Integer executive_id;
@@ -38,11 +44,11 @@ public class Task {
     }
 
     public Integer getColumn_id() {
-        return column_id;
+        return section.getId();
     }
 
     public void setColumn_id(Integer column_id) {
-        this.column_id = column_id;
+        this.section.getId();
     }
 
     public Integer getExecutive_id() {

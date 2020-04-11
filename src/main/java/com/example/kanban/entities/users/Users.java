@@ -1,6 +1,7 @@
 package com.example.kanban.entities.users;
 
 import com.example.kanban.entities.membership.Membership;
+import com.example.kanban.entities.task.Task;
 
 import javax.persistence.*;
 import java.util.*;
@@ -32,6 +33,9 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private Set<Membership> memberships;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Task> tasks;
 
     public Integer getId() {
         return id;

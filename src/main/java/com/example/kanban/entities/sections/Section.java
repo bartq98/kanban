@@ -1,6 +1,11 @@
 package com.example.kanban.entities.sections;
 
+import com.example.kanban.entities.boards.Board;
+import com.example.kanban.entities.task.Task;
+import com.example.kanban.entities.users.Users;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity // Or Section
 public class Section {
@@ -8,8 +13,8 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false)
-    private Integer board_id;
+    @ManyToOne
+    private Board board;
 
     @Column(nullable = false)
     private String name;
@@ -20,6 +25,8 @@ public class Section {
     @Column(nullable = false, updatable = false)
     private Integer ordering;
 
+    @OneToMany(mappedBy = "section")
+    private Set<Task> tasks;
 
     public Integer getId() {
         return id;
@@ -30,11 +37,11 @@ public class Section {
     }
 
     public Integer getBoard_id() {
-        return board_id;
+        return board.getId();
     }
 
     public void setBoard_id(Integer board_id) {
-        this.board_id = board_id;
+        this.board.setId(board_id);
     }
 
     public String getName() {

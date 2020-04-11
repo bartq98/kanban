@@ -1,6 +1,7 @@
 package com.example.kanban.entities.boards;
 
 import com.example.kanban.entities.membership.Membership;
+import com.example.kanban.entities.sections.Section;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,6 +23,9 @@ public class Board {
 
     @Column(nullable = false, length = 255, unique = true)
     private String slug;
+
+    @OneToMany(mappedBy = "board")
+    private Set<Section> sections;
 
     @OneToMany(mappedBy = "board")
     private Set<Membership> memberships;
