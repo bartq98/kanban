@@ -8,13 +8,13 @@ import javax.persistence.*;
 
 @Entity
 public class Membership {
-    @Id private Integer id;
-    private Integer userId;
-    private Integer boardId;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
     @Enumerated(EnumType.STRING)
     private MemberType member_type;
 
-    @ManyToOne //;)-<-<
+    @ManyToOne
     private Users user;
 
     @ManyToOne
@@ -23,20 +23,29 @@ public class Membership {
     public void setMember_type(MemberType member_type) {
         this.member_type = member_type;
     }
+    public void setMember_type(Boolean is_admin){
+        if(is_admin)this.member_type=MemberType.MANAGER;
+        else this.member_type=MemberType.EXECUTOR;
+    }
+
 
     public Integer getUserId() {
         return this.user.getId();
     }
 
     public Integer getBoardId() {
-        return this.boardId;
+        return this.board.getId();
     }
 
-    public void setBoard(Integer boardId) {
-        this.boardId = boardId;
+    public void setBoardId(Board boardId) {
+        this.board = boardId;
     }
 
-    public void setUser(Users userId) {
+    public void setUserId(Users userId) {
         this.user = userId;
+    }
+
+    public Integer getId(){
+        return this.id;
     }
 }

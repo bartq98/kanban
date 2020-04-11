@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UsersRepository extends CrudRepository<Users, Integer> {
 
    @Query("SELECT u.memberships FROM Users u")
     List<Membership> getAllMemberships(Integer id);
+   Optional<Users> findById(Integer id);
 
 }

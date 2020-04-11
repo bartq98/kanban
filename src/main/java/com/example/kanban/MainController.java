@@ -1,11 +1,15 @@
 package com.example.kanban;
 
 import com.example.kanban.entities.membership.Membership;
+import com.example.kanban.entities.membership.MembershipRepository;
 import com.example.kanban.entities.task.Task;
 import com.example.kanban.entities.task.TaskRepository;
 import com.example.kanban.entities.users.Users;
 import com.example.kanban.entities.users.UsersRepository;
+import com.example.kanban.entities.boards.Board;
+import com.example.kanban.entities.boards.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path="/demo")
@@ -23,6 +28,10 @@ public class MainController {
     private UsersRepository usersRepository;
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private BoardRepository boardRepository;
+    @Autowired
+    private MembershipRepository membershipRepository;
 
     @PostMapping(path="/add_user") // Map ONLY POST Requests
     public @ResponseBody String addNewUser (@RequestParam String name
@@ -75,5 +84,33 @@ public class MainController {
     public @ResponseBody Iterable<Task> getAllTasks() {
         // This returns a JSON or XML with the users
         return taskRepository.findAll();
+    }
+    @PostMapping(path="/add_board") // Map ONLY POST Requests
+    public @ResponseBody String addNewBoard (@RequestParam String name
+            , @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAt
+            , @RequestParam String slug) {
+        Board n = new Board();
+        n.setName(name);
+        n.setCreated_at(createdAt);
+        n.setSlug(slug);
+        boardRepository.save(n);
+        return "Saved";
+    }
+    @PostMapping(path="/add_membership") // Map ONLY POST Requests
+    public @ResponseBody String addNewMembership (@RequestParam Integer uid
+            , @RequestParam Integer boardId
+            , @RequestParam Boolean is_admin) {
+        Membership n = new Membership();
+
+        Optional<Users> users=usersRepository.findById(uid);
+        Optional<Board> board=boardRepository.findById(boardId);
+        if(users.isPresent() && board.isPresent()){
+            n.setUserId(users.get());
+            n.setBoardId(board.get());
+            n.setMember_type(is_admin);
+            membershipRepository.save(n);
+            return "Saved";
+        }
+        else return "Error";
     }
 }
