@@ -66,7 +66,7 @@ public class MainController {
         List<Membership> membershipList = usersRepository.getAllMemberships(2);
         System.out.println("HEJ");
         for (Membership m : membershipList) {
-            System.out.println(m.getId());
+            System.out.println(m.getUserId());
         }
         return usersRepository.findAll();
     }

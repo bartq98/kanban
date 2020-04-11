@@ -1,7 +1,11 @@
 package com.example.kanban.entities.boards;
 
+import com.example.kanban.entities.membership.Membership;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Boards")
@@ -18,6 +22,9 @@ public class Board {
 
     @Column(nullable = false, length = 255, unique = true)
     private String slug;
+
+    @OneToMany(mappedBy = "board")
+    private Set<Membership> memberships;
 
     public Integer getId() {
         return id;

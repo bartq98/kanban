@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UsersRepository extends CrudRepository<Users, Integer> {
 
-    @Query("SELECT u.memberships FROM Users u")
+   @Query("SELECT u.memberships FROM Users u")
     List<Membership> getAllMemberships(Integer id);
 
 }
